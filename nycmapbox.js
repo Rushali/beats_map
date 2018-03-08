@@ -14,35 +14,10 @@ var map = new mapboxgl.Map({
 });
 
 
-
 // The 'building' layer in the mapbox-streets vector source contains building-height
 // data from OpenStreetMap.
 map.on('load', function() {
-
-    //initialize threebox
-    var threebox = new Threebox(map);
-    threebox.setupDefaultLights();
-    //threebox.addAtCoordinate(object, position);
-
-    // Load and manipulate a THREE.js scenegraph as you would normally
-        loader = new THREE.JSONLoader();
-
-
-        loader.load("models/boeing747-400-jw.json", function(geometry) {
-            geometry.rotateY((90/360)*2*Math.PI);
-            geometry.rotateX((90/360)*2*Math.PI);
-
-            var material = new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
-            aircraft = new THREE.Mesh( geometry, material );
-            var planePosition = [-122.41356, 37.77577 ,100];
-
-            // Add the model to the threebox scenegraph at a specific geographic coordinate
-            threebox.addAtCoordinate(aircraft, planePosition, {scaleToLatitude: true, preScale: 2});
-        });
-
-
-
-
+    
     // Insert the layer beneath any symbol layer.
     var layers = map.getStyle().layers;
 
