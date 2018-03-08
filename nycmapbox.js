@@ -2,6 +2,26 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiaWxhaHN1ciIsImEiOiJjajE4Z2poZm4wNzR1MndxcWtoczgzajljIn0.ssxmh8xXwYYhvm_xzkPaVw';
 
 
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+var geometry = new THREE.BoxGeometry( 10, 10, 10 );
+var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+var cube = new THREE.Mesh( geometry, material );
+scene.add( cube );
+
+camera.position.z = 5;
+
+function animate() {
+    requestAnimationFrame( animate );
+    renderer.render( scene, camera );
+}
+animate();
+
 //MAKE A MAP
 var map = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/dark-v9', //mapbox://styles/mapbox/navigation-preview-night-v2, mapbox://styles/mapbox/dark-v9
