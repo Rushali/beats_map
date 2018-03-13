@@ -51,7 +51,7 @@ var geojson = {
                   coordinates: [-73.951473, 40.777881]
                 },
                 properties: {
-                  title: 'MUNY',
+                  title: '<video width="320" height="240" controls><source src="video1.MP4" type="video/mp4"></video>',
                   description: '86th 2nd Av'
                 }
               },
@@ -62,7 +62,7 @@ var geojson = {
                   coordinates: [-73.958426, 40.768655]
                 },
                 properties: {
-                  title: 'MUNY',
+                  title: '<img src="musician1.jpg" alt="musician in central park with saxophone" width="500" height="600">',
                   description: '72nd 2nd Av'
                 }
               },

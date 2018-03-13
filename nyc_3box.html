@@ -1,15 +1,18 @@
 <!doctype html>
 <head>
     <title>Threebox NYC buildings in 3D with resonance audio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script>
     <script src="../dist/threebox.js" type="text/javascript"></script>
     <script src="config.js"></script>
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
 
+    
+
     <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
 
-    <script type='text/javascript' src="nycresonance.js"></script>
+    <!-- <script type='text/javascript' src="nycresonance.js"></script> -->
 
     <script type='text/javascript' src="MTA_MusicLocations.js"></script>
     <style>
@@ -30,7 +33,18 @@
         height: 50px;
         border-radius: 50%;
         cursor: pointer;
-}
+        }
+
+        .mapboxgl-popup {
+        max-width: 200px;
+        }
+
+        .mapboxgl-popup-content {
+          text-align: center;
+          font-family: 'Open Sans', sans-serif;
+        }
+
+
     </style>
 </head>
 <body>
@@ -99,34 +113,50 @@
         threebox.setupDefaultLights();
 
         // Load and manipulate a THREE.js scenegraph as you would normally
-        loader = new THREE.JSONLoader();
 
-        loader.load("models/boeing747-400-jw.json", function(geometry) {
+        loader1 = new THREE.JSONLoader();
+        loader2 = new THREE.JSONLoader();
+
+        loader1.load("models/boeing747-400-jw.json", function(geometry) {
             geometry.rotateY((90/360)*2*Math.PI);
             geometry.rotateX((90/360)*2*Math.PI);
 
             var material = new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
             aircraft = new THREE.Mesh( geometry, material );
-            var planePosition = [-74.0066, 40.7135 ,100];
+            var planePosition = [-74.0066, 40.7135 ,10];
 
             // Add the model to the threebox scenegraph at a specific geographic coordinate
             threebox.addAtCoordinate(aircraft, planePosition, {scaleToLatitude: true, preScale: 2});
         });
 
+        //  loader2.load("models/rushali.json", function(object) {
+        //     geometry.rotateY((90/360)*2*Math.PI);
+        //     geometry.rotateX((90/360)*2*Math.PI);
+
+        //     var rushalimaterial = new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
+        //      rushali = new THREE.Mesh( geometry, rushalimaterial );
+        //     var rushaliPosition = [-74.0066, 40.7135 ,100];
+
+        //     // Add the model to the threebox scenegraph at a specific geographic coordinate
+        //     threebox.addAtCoordinate(rushali, rushaliPosition, {scaleToLatitude: true, preScale: 2});
+        // });
+
     });
 
-// add markers to map
-geojson.features.forEach(function(marker) {
+    // add markers to map
+    geojson.features.forEach(function(marker) {
 
-  // create a HTML element for each feature
-  var el = document.createElement('div');
-  el.className = 'marker';
+      // create a HTML element for each feature
+      var el = document.createElement('div');
+      el.className = 'marker';
 
-  // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el)
-  .setLngLat(marker.geometry.coordinates)
-  .addTo(map);
-});
+      // make a marker for each feature and add to the map
+      new mapboxgl.Marker(el)
+      .setLngLat(marker.geometry.coordinates)
+      .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+      .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '<p>'))
+      .addTo(map);
+    });
 
 
     </script>
