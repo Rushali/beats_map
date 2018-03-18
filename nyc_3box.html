@@ -1,14 +1,17 @@
 <!doctype html>
 <head>
     <title>Threebox NYC buildings in 3D with resonance audio</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script>
+
     <script src="../dist/threebox.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script>
+    
     <script src="config.js"></script>
 
-    <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
-
-    
+   <!--  <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script> -->
+   <!--  <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' /> -->
+    <script src="/mapbox-gl-js/dist/mapbox-gl.js" type="text/javascript"></script>
+     <link href='/mapbox-gl-js/dist/mapbox-gl.css' rel='stylesheet' />
+   
 
     <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
 
@@ -115,7 +118,7 @@
         // Load and manipulate a THREE.js scenegraph as you would normally
 
         loader1 = new THREE.JSONLoader();
-        loader2 = new THREE.JSONLoader();
+        //loader2 = new THREE.OBJLoader();
 
         loader1.load("models/boeing747-400-jw.json", function(geometry) {
             geometry.rotateY((90/360)*2*Math.PI);
@@ -129,16 +132,16 @@
             threebox.addAtCoordinate(aircraft, planePosition, {scaleToLatitude: true, preScale: 2});
         });
 
-        //  loader2.load("models/rushali.json", function(object) {
+        //  loader2.load("models/truck.obj", function(object) {
         //     geometry.rotateY((90/360)*2*Math.PI);
         //     geometry.rotateX((90/360)*2*Math.PI);
 
-        //     var rushalimaterial = new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
-        //      rushali = new THREE.Mesh( geometry, rushalimaterial );
-        //     var rushaliPosition = [-74.0066, 40.7135 ,100];
+        //     var truckmaterial = new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
+        //      truck = new THREE.Mesh( geometry, truckmaterial );
+        //     var truckPosition = [-74.0066, 40.7135 ,100];
 
         //     // Add the model to the threebox scenegraph at a specific geographic coordinate
-        //     threebox.addAtCoordinate(rushali, rushaliPosition, {scaleToLatitude: true, preScale: 2});
+        //     threebox.addAtCoordinate(truck, truckPosition, {scaleToLatitude: true, preScale: 2});
         // });
 
     });
