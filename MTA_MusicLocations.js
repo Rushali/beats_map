@@ -84,7 +84,7 @@ var geojson = {
                   coordinates: [-73.967866, 40.762988]
                 },
                 properties: {
-                  title: 'MUNY',
+                  title: '<iframe src="underground.html"></iframe>',
                   description: 'LEXINGTON AVENUE - 59TH STREET'
                 }
               },
