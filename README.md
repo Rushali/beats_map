@@ -3,15 +3,16 @@
 You can check out the current state of the web-doc - https://rushali.github.io/
 
 ## Description
-Tuner is an audio analysis web app that can take audio and translate the frequencies into approximate MIDI notation to be used in music making software like Garage Band, Ableton Live, or any other program that can load MIDI files.
+beats.nyc is a chaotic archive of street musicians who perform underground in new york city. 
+It uses [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) and [three.js](https://threejs.org/) and three.js plugin for Mapbox GL JS called [threebox](https://github.com/peterqliu/threebox)
 
 
 ## Table of Contents
-* nyc_3box.html: Main html file
+* index.html: Main html file
 * MTA_MusicLocations.js: Database of MTA locations assigned by the Music Under New York Program
 * nycresonance.js: resonance audio file for spatial audio 
 * underground.html: html for the underground three js scenes
 * style.css: styling info for the HTML
 
 ## Instructions
-Clone or download this repository and run live-server in the directory. Browser opens localhost - click on nyc_3box.html
+Clone or download this repository and run live-server in the directory. Browser opens localhost - click on index.html
