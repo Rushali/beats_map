@@ -11,8 +11,6 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
   <!--   <script src="/mapbox-gl-js/dist/mapbox-gl.js" type="text/javascript"></script>
      <link href='/mapbox-gl-js/dist/mapbox-gl.css' rel='stylesheet' /> -->
-   
-
     <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
 
     <!-- <script type='text/javascript' src="nycresonance.js"></script> -->
@@ -30,7 +28,7 @@
         }
 
         .marker {
-        background-image: url('musical-note.png');
+        background-image: url('/Data/Images/musical-note.png');
         background-size: cover;
         width: 50px;
         height: 50px;
@@ -131,18 +129,6 @@
             // Add the model to the threebox scenegraph at a specific geographic coordinate
             threebox.addAtCoordinate(aircraft, planePosition, {scaleToLatitude: true, preScale: 2});
         });
-
-        //  loader2.load("models/truck.obj", function(object) {
-        //     geometry.rotateY((90/360)*2*Math.PI);
-        //     geometry.rotateX((90/360)*2*Math.PI);
-
-        //     var truckmaterial = new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
-        //      truck = new THREE.Mesh( geometry, truckmaterial );
-        //     var truckPosition = [-74.0066, 40.7135 ,100];
-
-        //     // Add the model to the threebox scenegraph at a specific geographic coordinate
-        //     threebox.addAtCoordinate(truck, truckPosition, {scaleToLatitude: true, preScale: 2});
-        // });
 
     });
 

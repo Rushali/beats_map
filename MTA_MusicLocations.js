@@ -51,7 +51,7 @@ var geojson = {
                   coordinates: [-73.951473, 40.777881]
                 },
                 properties: {
-                  title: '<video width="320" height="240" controls><source src="video1.MP4" type="video/mp4"></video>',
+                  title: '<video width="320" height="240" controls><source src="/Data/Video/video1.MP4" type="video/mp4"></video>',
                   description: '86th 2nd Av'
                 }
               },
@@ -62,7 +62,7 @@ var geojson = {
                   coordinates: [-73.958426, 40.768655]
                 },
                 properties: {
-                  title: '<img src="musician1.jpg" alt="musician in central park with saxophone" width="500" height="600">',
+                  title: '<img src="Data/Images/musician1.jpg" alt="musician in central park with saxophone" width="500" height="600">',
                   description: '72nd 2nd Av'
                 }
               },
@@ -73,7 +73,7 @@ var geojson = {
                   coordinates: [-73.981807, 40.768484]
                 },
                 properties: {
-                  title: '<iframe src="/vrview-master/examples/video/index.html"></iframe>',
+                  title: '<iframe src="/dist/vrview-master/examples/video/index.html"></iframe>',
                   description: '59th St - Columbus Circle'
                 }
               },
