@@ -53,7 +53,8 @@ var geojson = {
                 },
                 properties: {
                   title: '<video width="720px" height="480px" top="0" left="0" controls><source src="/Data/Video/video1.MP4" type="video/mp4"></video>',
-                  description: '86th 2nd Av'
+                  description: '86th 2nd Av',
+                  
                 }
               },
               {
@@ -64,7 +65,8 @@ var geojson = {
                 },
                 properties: {
                   title: '<img src="Data/Images/musician1.jpg" alt="musician in central park with saxophone" width="720px" height="480px" top="0" left="0">',
-                  description: '72nd 2nd Av'
+                  description: '72nd 2nd Av',
+                  
                 }
               },
               {
@@ -74,9 +76,10 @@ var geojson = {
                   coordinates: [-73.981807, 40.768484]
                 },
                 properties: {
-                  title: '<iframe src="/dist/vrview-master/examples/video/index.html" width="720px" height="500px" top="0" left="0"></iframe>',  //dist/vrview-master/examples/video/index.html
+                  title: '<iframe src="/dist/vrview-master/examples/video/index.html" class="iframe"></iframe>',  //dist/vrview-master/examples/video/index.html
                   //<iframe width="720" height="480" src="https://www.youtube.com/embed/DBiuVW5aOGc" frameborder="0" allowfullscreen></iframe>
                   description: '59th St - Columbus Circle'
+                  
                 }
               },
               {
@@ -87,7 +90,8 @@ var geojson = {
                 },
                 properties: {
                   title: '<iframe src="underground.html" width="720px" height="480px" top="0" left="0">',
-                  description: 'LEXINGTON AVENUE - 59TH STREET'
+                  description: 'LEXINGTON AVENUE - 59TH STREET',
+                  
                 }
               },
               {
@@ -98,7 +102,8 @@ var geojson = {
                 },
                 properties: {
                   title: '<iframe src="/dist/vrview-master/examples/video/index.html" width="720px" height="480px" top="0" left="0"></iframe>',
-                  description: '53rd STREET - Lexington Avenue'
+                  description: '53rd STREET - Lexington Avenue',
+                  
                 }
               },
               {
@@ -110,7 +115,8 @@ var geojson = {
                 properties: {
                   title: '<iframe src="/iframes/webgl_video_panorama_equirectangular.html" width="720px" height="480px" top="0" left="0" ></iframe>', // examples/webgl_video_panorama_equirectangular.html
                   // width="'+ window.innerWidth+' "height="' + window.innerHeight+'" top="0" left="0"
-                  description: '47-50 Streets - Rockefeller center'
+                  description: '47-50 Streets - Rockefeller center',
+                  
                 }
               },
               {
@@ -121,7 +127,8 @@ var geojson = {
                 },
                 properties: {
                   title: '<iframe src="/dist/vrview-master/examples/video/index.html" width="720px" height="500px" top="0" left="0"></iframe>',
-                  description: '42ND STREET - PORT AUTHORITY BUS TERMINAL'
+                  description: '42ND STREET - PORT AUTHORITY BUS TERMINAL',
+                  
                 }
               },
               {
@@ -132,7 +139,8 @@ var geojson = {
                 },
                 properties: {
                   title: '<iframe src="/iframes/canvas_materials_video.html" width="720px" height="480px" top="0" left="0" ></iframe>', //canvas_materials_video.html
-                  description: 'TIMES SQUARE - 42ND STREET'
+                  description: 'TIMES SQUARE - 42ND STREET',
+                  
                 }
               },
               {
@@ -143,7 +151,8 @@ var geojson = {
                 },
                 properties: {
                   title: 'MUNY',
-                  description: 'GRAND CENTRAL - 42ND STREET'
+                  description: 'GRAND CENTRAL - 42ND STREET',
+                  
                 }
               },
               {
@@ -154,7 +163,8 @@ var geojson = {
                 },
                 properties: {
                   title: 'MUNY',
-                  description: '34th STREET - HERALD SQUARE'
+                  description: '34th STREET - HERALD SQUARE',
+                  
                 }
               },
               // {

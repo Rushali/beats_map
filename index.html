@@ -16,40 +16,10 @@
     <!-- <script type='text/javascript' src="nycresonance.js"></script> -->
     
     <script type='text/javascript' src="MTA_MusicLocations.js"></script>
-    <style>
-        body, html { 
-            width: 100%;
-            height: 100%;
-            margin: 0;
-        }
-        #map { 
-            width: 100%;
-            height: 100%;
-        }
+    <script type='text/javascript' src="scripts/jquery-3.3.1.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 
-        .marker {
-        background-image: url('/Data/Images/musical-note.png');
-        background-size: cover;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        cursor: pointer;
-        }
-
-        .mapboxgl-popup {
-        max-width: 90%;
-        /*width: 1000px;
-        height: 2000px*/
-        }
-
-        .mapboxgl-popup-content {
-          text-align: center;
-          font-family: 'Open Sans', sans-serif;
-          background-color : transparent;
-        }
-
-
-    </style>
 </head>
 <body>
     <div id='map' class='map'></div>
@@ -138,6 +108,8 @@
     // add markers to map
      geojson.features.forEach(function(marker) {
 
+        elementId = marker.properties.description.split(' ').join('_');
+       
       // create a HTML element for each feature
       var el = document.createElement('div');
               // var div = window.document.createElement('div');
@@ -148,6 +120,7 @@
           // .addTo(map);
       // var markerLink = 
       el.className = 'marker';
+      el.setAttribute("id", elementId);
 
       // make a marker for each feature and add to the map
       new mapboxgl.Marker(el)
@@ -156,12 +129,15 @@
                       // .setLngLat(geojson.features[0].geometry.coordinates)
                       //     .addTo(map);
        .setLngLat(marker.geometry.coordinates)
-        .setPopup(new mapboxgl.Popup() // add popups { offset: 25 }
-      //   .setDOMContent('<div>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
-     .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+        // .setPopup(new mapboxgl.Popup() // add popups { offset: 25 }
+     //  //   .setDOMContent('<div>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+     // .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+
        .addTo(map);
      });
 
 
     </script>
+
+    <script type='text/javascript' src="scripts/actions.js"></script>
 </body>
