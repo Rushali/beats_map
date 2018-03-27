@@ -22,6 +22,8 @@
     "test": "browserify tests/threebox-tests.js > tests/threebox-tests-bundle.js; echo 'Open tests/threebox-tests.html to run tests in the browser.'"
   },
   "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^2.0.4",
     "three": "^0.91.0"
   }
 }
