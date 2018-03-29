@@ -81,30 +81,32 @@ var geojson = {
                   
                 }
               },
-              {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: [-73.967866, 40.762988]
-                },
-                properties: {
-                  title: '',
-                  description: 'LEXINGTON AVENUE - 59TH STREET',
+              // {
+              //   type: 'Feature',
+              //   geometry: {
+              //     type: 'Point',
+              //     coordinates: [-73.967866, 40.762988]
+              //   },
+              //   properties: {
+              //     title: '',
+              //     description: 'LEXINGTON AVENUE - 59TH STREET',
                   
-                }
-              },
-              {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: [-73.969074, 40.757698]
-                },
-                properties: {
-                  title: '',
-                  description: '53rd STREET - Lexington Avenue',
+              //   }
+              // }
+              // ,
+              // {
+              //   type: 'Feature',
+              //   geometry: {
+              //     type: 'Point',
+              //     coordinates: [-73.969074, 40.757698]
+              //   },
+              //   properties: {
+              //     title: '',
+              //     description: '53rd STREET - Lexington Avenue',
                   
-                }
-              },
+              //   }
+              //}
+              ,
               {
                 type: 'Feature',
                 geometry: {
@@ -117,54 +119,54 @@ var geojson = {
                   
                 }
               },
-              {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: [-73.989980, 40.757465]
-                },
-                properties: {
-                  title: '',
-                  description: '42ND STREET - PORT AUTHORITY BUS TERMINAL',
+              // {
+              //   type: 'Feature',
+              //   geometry: {
+              //     type: 'Point',
+              //     coordinates: [-73.989980, 40.757465]
+              //   },
+              //   properties: {
+              //     title: '',
+              //     description: '42ND STREET - PORT AUTHORITY BUS TERMINAL',
                   
-                }
-              },
-              {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: [-73.987277, 40.755238]
-                },
-                properties: {
-                  title: '', //canvas_materials_video.html
-                  description: 'TIMES SQUARE - 42ND STREET',
+              //   }
+              //},
+              // {
+              //   type: 'Feature',
+              //   geometry: {
+              //     type: 'Point',
+              //     coordinates: [-73.987277, 40.755238]
+              //   },
+              //   properties: {
+              //     title: '', //canvas_materials_video.html
+              //     description: 'TIMES SQUARE - 42ND STREET',
                   
-                }
-              },
-              {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: [-73.977229, 40.752726]
-                },
-                properties: {
-                  title: 'MUNY',
-                  description: 'GRAND CENTRAL - 42ND STREET',
+              //   }
+              // },
+              // {
+              //   type: 'Feature',
+              //   geometry: {
+              //     type: 'Point',
+              //     coordinates: [-73.977229, 40.752726]
+              //   },
+              //   properties: {
+              //     title: 'MUNY',
+              //     description: 'GRAND CENTRAL - 42ND STREET',
                   
-                }
-              },
-              {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: [-73.988131, 40.750082]
-                },
-                properties: {
-                  title: 'MUNY',
-                  description: '34th STREET - HERALD SQUARE',
+              //   }
+              // },
+              // {
+              //   type: 'Feature',
+              //   geometry: {
+              //     type: 'Point',
+              //     coordinates: [-73.988131, 40.750082]
+              //   },
+              //   properties: {
+              //     title: 'MUNY',
+              //     description: '34th STREET - HERALD SQUARE',
                   
-                }
-              },
+              //   }
+              // },
               // {
               //   type: 'Feature',
               //   geometry: {

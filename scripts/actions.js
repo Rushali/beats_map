@@ -49,9 +49,9 @@ $( ".mapboxgl-marker" ).click(function(element) {
     	$('.media_cover').append('<img src="../Data/Images/musician1.jpg" alt="musician in central park with saxophone" style="position:fixed; margin: auto; top:0px; left:0px; bottom:0px; right:0px; height:100%; border:none; padding:0; overflow:hidden;"> ');
     	break;
 
-    case '53rd_STREET_-_Lexington_Avenue':
-        $('.media_cover').append('<iframe src="../iframes/canvas_materials_video.html" style="position:fixed; margin: auto; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; "></iframe>');
-        break;
+    // case '53rd_STREET_-_Lexington_Avenue':
+    //     $('.media_cover').append('<iframe src="../iframes/canvas_materials_video.html" style="position:fixed; margin: auto; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; "></iframe>');
+    //     break;
 
     case '47-50_Streets_-_Rockefeller_center':
         $('.media_cover').append('<iframe width="1120" height="630" src="https://www.youtube.com/embed/kszWN8TteIE" style="frameborder="0" allow="autoplay; encrypted-media" allowfullscreen position:fixed; margin: auto; width:100%; height:100%; overflow:hidden; "></iframe>');
