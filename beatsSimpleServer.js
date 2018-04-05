@@ -8,7 +8,9 @@ httpServer.listen(7000);
 function requestHandler(req, res) {
 
   var parsedUrl = url.parse(req.url);
+  parsedUrl.pathname = parsedUrl.pathname=="/"?"/index.html":parsedUrl.pathname;
   console.log("The Request is: " + parsedUrl.pathname);
+	
 
   fs.readFile(__dirname + parsedUrl.pathname,
     function (err, data) {
