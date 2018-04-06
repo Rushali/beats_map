@@ -1,6 +1,13 @@
 console.log('🌮 taco')
 
-$( 'body').prepend('<button class="about_button" type="button">BEATS NYC</button>')
+$( 'body').prepend('<button class="about_button" type="button">NYC BEATS</button>')
+
+$( 'body').prepend('<button class="add_button" type="button">spotted</button>')
+
+$('#map').click(function(element){
+    //console.log("map clicked");
+    $('.form_cover').show();
+})
 
 $(".about_button").click(function(element){
     console.log('about button');
@@ -83,7 +90,6 @@ $( ".mapboxgl-marker" ).click(function(element) {
 }
 
 });
-
 
 function add_close_listerer(){
 

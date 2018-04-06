@@ -23,6 +23,25 @@ body, html {
     z-index: 10000 !important
 }
 
+
+.add_button{
+    font-family : 'Courier New', monospace;
+    font-size: 32px;
+    display: inline;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #53ecf4;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000 !important
+}
+
 .about_button:hover {
     background-color: #444;
     color: #fff;
@@ -35,12 +54,21 @@ body, html {
 }
 
 .marker {
-background-image: url('/Data/Images/placeholder.png');
+background-image: url('/Data/Images/animatedmusic.gif'); /*//placeholder.png*/
 background-size: cover;
 width: 75px;
 height: 75px;
 border-radius: 50%;
 cursor: pointer;
+}
+
+.spottedmarker {
+background-image: url('/Data/Images/placeholder.png'); 
+background-size: cover;
+width: 75px;
+height: 75px;
+border-radius: 50%;
+cursor: pointer; 
 }
 
 .mapboxgl-popup {
@@ -72,6 +100,18 @@ height: 2000px*/
     display: none;
 }
 
+.form_cover {
+    /*background: rgba(255, 0, 255, 0.6);*/
+    height: 300px;
+    width: 300px;
+    position: absolute;
+    z-index: 1000 !important;
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 30%;
+}
+
 .close_button {
     font-size: 40px;
     border-radius: 10px;
@@ -94,4 +134,9 @@ height: 2000px*/
     padding-right: 40px;
     padding-left: 500px;
     padding-top: 200px;
+}
+
+#mouseinfo {
+
+
 }
