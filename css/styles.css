@@ -24,7 +24,7 @@ body, html {
 }
 
 
-.add_button{
+/*.add_button{
     font-family : 'Courier New', monospace;
     font-size: 32px;
     display: inline;
@@ -40,7 +40,7 @@ body, html {
     bottom: 20px;
     right: 20px;
     z-index: 10000 !important
-}
+}*/
 
 .about_button:hover {
     background-color: #444;
@@ -74,8 +74,6 @@ cursor: pointer;
 .mapboxgl-popup {
 width: 50%;
 position: absolute;
-/*width: 1000px;
-height: 2000px*/
 }
 
 .mapboxgl-popup-content {
@@ -83,13 +81,6 @@ height: 2000px*/
   font-family: 'Open Sans', sans-serif;
   background-color : transparent;
 }
-/*
-.iframe {
-    width=720px;
-    height=500px;
-    top=0;
-    left=0;
-}*/
 
 .media_cover {
     background: rgba(255, 255, 255, 0.6);
@@ -100,16 +91,26 @@ height: 2000px*/
     display: none;
 }
 
+#formclosebutton {
+    align-content: left;
+}
+
 .form_cover {
-    /*background: rgba(255, 0, 255, 0.6);*/
-    height: 300px;
-    width: 300px;
+    display: none;
+    font-family : 'Courier New', monospace;
+    font-size: 18px;
+    background: #53ecf4;
     position: absolute;
     z-index: 1000 !important;
-    display: none;
-    position: fixed;
     top: 30%;
     left: 30%;
+    display: inline;
+    padding: 15px 25px;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    text-align: center;
+    text-decoration: none;
 }
 
 .close_button {
@@ -136,7 +137,13 @@ height: 2000px*/
     padding-top: 200px;
 }
 
-#mouseinfo {
 
+.geocoder {
+        position:absolute;
+        z-index:1;
+        width:50%;
+        left:20px;
+        top:20px;
+    }
 
-}
+.mapboxgl-ctrl-geocoder { min-width:100%; }
