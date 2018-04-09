@@ -78,7 +78,7 @@ position: absolute;
 
 .mapboxgl-popup-content {
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family : 'Courier New', monospace;
   background-color : transparent;
 }
 
@@ -97,14 +97,13 @@ position: absolute;
 
 .form_cover {
     display: none;
+    z-index: 1000 !important;
     font-family : 'Courier New', monospace;
     font-size: 18px;
     background: #53ecf4;
     position: absolute;
-    z-index: 1000 !important;
     top: 30%;
     left: 30%;
-    display: inline;
     padding: 15px 25px;
     outline: none;
     border: none;
@@ -126,7 +125,6 @@ position: absolute;
     font-family : 'Courier New', monospace;
     font-weight: bold;
     text-shadow: 2px 2px #ff0000;
-   
     font-size: 40px;
     background-color: transparent;
     top:20px;
@@ -147,3 +145,12 @@ position: absolute;
     }
 
 .mapboxgl-ctrl-geocoder { min-width:100%; }
+
+#formclosebutton {
+    border-radius: 10px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10000 !important
+
+}
