@@ -1,34 +1,45 @@
 console.log('🌮 taco')
+var markerClicked = false;
+// $(document).ready(function(){   
+// })
 
-$( 'body').prepend('<button class="about_button" type="button">NYC BEATS</button>')
-
+$('body').prepend('<button class="about_button" type="button">NYC BEATS</button>')
 
 $('#map').click(function(element){
-    console.log('map clicked');
-    $('.form_cover').show();
-})
+    console.log(markerClicked);
+    if(!markerClicked) {
+        console.log('map clicked');
+        $('.form_cover').show();
+    }
+});
 
 $(".about_button").click(function(element){
     console.log('about button');
-    $('.media_cover').empty();
     // adding the cover
     // $('body').prepend('<div class="media_cover"></div>')
-    $(".media_cover").show();
+    $('.about_cover').show();
     // adding a close button
-    $('.media_cover').append('<p class="media_text">Beats NYC is a chaotic archive & data driven storytelling experiment in the WebGL world. It attempts to visualize subway music playing under New York. </p> <button class="close_button" type="button">X</button><br><br>')
+    $('.about_cover').append('<button class="close_button" type="button">x</button><br><br>')
     $('.about_button').hide();
     // adding an event listener to close the cover
-    add_close_listerer();
+    
+    $(".close_button").on("click", function(){
+    console.log("close button clicked");
+    add_close_listener();
+    });
+
 });
 
 $( ".mapboxgl-marker" ).click(function(element) {
-    $(".media_cover").show();
+    markerClicked = true;
     $('.media_cover').empty();
+    $(".media_cover").show();
+
 	// adding a close button
     $('.media_cover').append('<button class="close_button" type="button">X</button><br><br>')
 
     // adding an event listener to close the cover
-  	add_close_listener();
+  	// add_close_listener();
 
   	// adding the content based on the clicked element ID
 	switch(element.target.id) {
@@ -82,13 +93,17 @@ $( ".mapboxgl-marker" ).click(function(element) {
         console.log("❌ I'm sorry, I don't recognize this marker.")
 }
 
+$(".close_button").on("click", function(){
+    console.log("close button clicked");
+    add_close_listener();
+});
 });
 
 function add_close_listener(){
-
-	$( ".close_button" ).click(function(element) {
+    markerClicked = false;
+    //console.log(markerClicked);
+    $('.about_cover').hide();
 	$('.media_cover').hide();
     $('.media_text').remove();
     $('.about_button').show();
-	});
 }

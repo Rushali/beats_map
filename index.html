@@ -13,12 +13,18 @@
     <script type='text/javascript' src="/scripts/jquery-3.3.1.min.js"></script>
     <script type='text/javascript' src="scripts/spatialaudio.js"></script> 
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 </head>
 
 <body>
 
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
+
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css'/>
+
+    <div class="about_cover">
+    <p >Beats NYC is a chaotic archive & data driven storytelling experiment in the WebGL world. It attempts to visualize subway music playing under New York. </p> 
+    </div>
 
     <div class="form_cover">
         <form action="javascript:addspottedMarker(); javascript:formHide();">
@@ -27,7 +33,7 @@
             Spotted a Musician?<br>
             <br>
             Until when are they playing?<br><br>
-          <input type="text" name="lastname" >
+          <input id="appt-time" type="time" name="appt-time" value="13:30">
           <br><br>
           <input type="submit" value="Submit">
         </form> 
@@ -35,10 +41,14 @@
     <div class="media_cover"></div>
     <div id='geocoder' class='geocoder'></div>
     <div id='map' class='map'></div>
-        <script>
-    if(!config) console.error("Config not set! Make a copy of 'config_template.js', add in your access token, and save the file as 'config.js'.");
     
-    mapboxgl.accessToken = config.accessToken;
+    <script>
+    if(!config) console.error("Config not set! Make a copy of 'config_template.js', add in your access token, and save the file as 'config.js'.");
+
+const now = new Date();
+//console.log(now.getHours()+" "+now.getMinutes());
+    
+mapboxgl.accessToken = config.accessToken;
 var bounds = [
                     [-74.031296, 40.699754], // nyc Southwest coordinates
                     [-73.844528, 40.799629]  // nyc Northeast coordinates
@@ -115,16 +125,30 @@ var geocoder = new MapboxGeocoder({
             latlng = e.lngLat;
          }
         var fileID = 0;
+
+        var spottedmusician;
+
         function addspottedMarker(){
+            var timehours = now.getHours();
+            var timemins = now.getMinutes();
+
             fileID++;
             //add layer of spotted musicians
-            console.log("submit clicked");
+            console.log("musician spotted submit clicked");
             var elspotted = document.createElement('div');
             elspotted.className = 'spottedmarker';
             elspotted.setAttribute("id", 'fileID'+fileID );
-            var spottedmusician = new mapboxgl.Marker(elspotted).setLngLat(latlng).addTo(map);
+            spottedmusician = new mapboxgl.Marker(elspotted).setLngLat(latlng).addTo(map);
             setTimeout(function(){
             $('#fileID'+fileID).remove();}, 5000);
+            pushData(fileID, latlng,timehours , now);
+        }
+
+        function pushData(name, place, time, timestamp){
+            var data = JSON.stringify({name:name, place:place, time:time,timestamp:timestamp});
+            var database = firebase.database();
+            var musicianDb = database.ref('musicianlocations');
+            musicianDb.push(JSON.parse(data));
         }
 
         // Add geolocate control to the map.
@@ -151,11 +175,23 @@ var geocoder = new MapboxGeocoder({
             new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
         });
 
-var geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken
-});
+        var geocoder = new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken
+        });
 
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+// Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyA900B-mdQR0FNraYbG4z7KdhsTE-1LcXc",
+        authDomain: "newagent-89af2.firebaseapp.com",
+        databaseURL: "https://newagent-89af2.firebaseio.com",
+        projectId: "newagent-89af2",
+        storageBucket: "newagent-89af2.appspot.com",
+        messagingSenderId: "824108281115"
+      };
+      firebase.initializeApp(config);
+
     </script>
         <script type='text/javascript' src="scripts/actions.js"></script>
 </body>

@@ -2,6 +2,8 @@ var http = require('http');
 var fs = require('fs');
 var httpServer = http.createServer(requestHandler);
 var url = require('url');
+const express = require('express');
+const app = express();
 
 httpServer.listen(7000);
 
