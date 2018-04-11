@@ -92,9 +92,17 @@
     }, labelLayerId);
 
 
+        var greenSphere = new Tone.Panner3D().toMaster();
+        var drone = new Tone.Player({
+            url : "/Data/Audio/drumadics.wav",
+            loop: true,
+        }).connect(greenSphere).sync().start(0);
+greenSphere.setPostion(x, y, z);
+
+
         // Initialize threebox
-        window.threebox = new Threebox(map);
-        threebox.setupDefaultLights();
+        // window.threebox = new Threebox(map);
+        // threebox.setupDefaultLights();
 
         // Load and manipulate a THREE.js scenegraph as you would normally
 
