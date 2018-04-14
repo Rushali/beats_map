@@ -3,16 +3,13 @@
     <title>🥑 Threebox NYC buildings in 3D with resonance audio</title>
 
     <script src="/dist/threebox.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script>
-    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script> --> 
     <script src="/scripts/config.js"></script>
-
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
-
+    <!-- <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
+ -->
     <!-- <script type='text/javascript' src="/scripts/nycresonance.js"></script> -->
-    
     <script type='text/javascript' src="/scripts/MTA_MusicLocations.js"></script>
     <script type='text/javascript' src="/scripts/jquery-3.3.1.min.js"></script>
     
@@ -47,7 +44,9 @@
         hash: true,
         minZoom: 14,
         maxBounds: bounds,
-        container: 'map'
+        container: 'map',
+        doubleClickZoom: false,
+
     });
 
     map.on("load", function() {
@@ -96,7 +95,32 @@
         window.threebox = new Threebox(map);
         threebox.setupDefaultLights();
 
-        // Load and manipulate a THREE.js scenegraph as you would normally
+            var listener = new THREE.AudioListener();
+            threebox.camera.add( listener );
+
+            // create the PositionalAudio object (passing in the listener)
+            var sound = new THREE.PositionalAudio( listener );
+
+            // load a sound and set it as the PositionalAudio object's buffer
+            var audioLoader = new THREE.AudioLoader();
+            audioLoader.load( 'Data/Audio/drumadics.wav', function( buffer ) {
+                sound.setBuffer(buffer);
+                sound.setRefDistance(20);
+                sound.play();
+            });
+
+            // create an object for the sound to play from
+            var sphere = new THREE.SphereGeometry( 20, 32, 16 );
+            var material = new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
+            var mesh = new THREE.Mesh( sphere, material );
+            var planePosition = [-74.0066, 40.7135 ,10];
+            threebox.scene.add( mesh );
+
+            // finally add the sound to the mesh
+            mesh.add( sound );
+            threebox.addAtCoordinate(mesh, planePosition, {scaleToLatitude: false, preScale: 2});
+
+        //Load and manipulate a THREE.js scenegraph as you would normally
 
         // loader1 = new THREE.JSONLoader();
         // //loader2 = new THREE.OBJLoader();
@@ -107,13 +131,11 @@
 
         //     var material = new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
         //     aircraft = new THREE.Mesh( geometry, material );
-        //     var planePosition = [-74.0066, 40.7135 ,10];
+            
 
-        //     // Add the model to the threebox scenegraph at a specific geographic coordinate
-        //     threebox.addAtCoordinate(aircraft, planePosition, {scaleToLatitude: true, preScale: 2});
-        // });
-
-    });
+            // Add the model to the threebox scenegraph at a specific geographic coordinate
+            //threebox.addAtCoordinate(aircraft, planePosition);
+        });
 
     // add markers to map
      geojson.features.forEach(function(marker) {
