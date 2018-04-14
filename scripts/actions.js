@@ -1,12 +1,17 @@
 console.log('🌮 taco')
 
-$( 'body').prepend('<button class="about_button" type="button">BEATS NYC</button>')
+$( 'body').prepend('<button class="about_button" type="button">NYC BEATS</button>')
+
+
+$('#map').click(function(element){
+    console.log('map clicked');
+    $('.form_cover').show();
+})
 
 $(".about_button").click(function(element){
     console.log('about button');
     $('.media_cover').empty();
-
-// adding the cover
+    // adding the cover
     // $('body').prepend('<div class="media_cover"></div>')
     $(".media_cover").show();
     // adding a close button
@@ -17,18 +22,13 @@ $(".about_button").click(function(element){
 });
 
 $( ".mapboxgl-marker" ).click(function(element) {
-    console.log('360 video');
-
-	// adding the cover
-	// $('body').prepend('<div class="media_cover"></div>')
     $(".media_cover").show();
     $('.media_cover').empty();
 	// adding a close button
     $('.media_cover').append('<button class="close_button" type="button">X</button><br><br>')
 
     // adding an event listener to close the cover
-  	add_close_listerer();
-
+  	add_close_listener();
 
   	// adding the content based on the clicked element ID
 	switch(element.target.id) {
@@ -49,9 +49,9 @@ $( ".mapboxgl-marker" ).click(function(element) {
     	$('.media_cover').append('<img src="../Data/Images/musician1.jpg" alt="musician in central park with saxophone" style="position:fixed; margin: auto; top:0px; left:0px; bottom:0px; right:0px; height:100%; border:none; padding:0; overflow:hidden;"> ');
     	break;
 
-    // case '53rd_STREET_-_Lexington_Avenue':
-    //     $('.media_cover').append('<iframe src="../iframes/canvas_materials_video.html" style="position:fixed; margin: auto; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; "></iframe>');
-    //     break;
+    case '53rd_STREET_-_Lexington_Avenue':
+        $('.media_cover').append('<iframe src="../iframes/canvas_materials_video.html" style="position:fixed; margin: auto; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; "></iframe>');
+        break;
 
     case '47-50_Streets_-_Rockefeller_center':
         $('.media_cover').append('<iframe width="1120" height="630" src="https://www.youtube.com/embed/kszWN8TteIE" style="frameborder="0" allow="autoplay; encrypted-media" allowfullscreen position:fixed; margin: auto; width:100%; height:100%; overflow:hidden; "></iframe>');
@@ -84,8 +84,7 @@ $( ".mapboxgl-marker" ).click(function(element) {
 
 });
 
-
-function add_close_listerer(){
+function add_close_listener(){
 
 	$( ".close_button" ).click(function(element) {
 	$('.media_cover').hide();

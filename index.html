@@ -1,42 +1,59 @@
 <!doctype html>
+
 <head>
     <title>🥑 Threebox NYC buildings in 3D with resonance audio</title>
-
     <script src="/dist/threebox.js" type="text/javascript"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script> --> 
     <script src="/scripts/config.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
-    <!-- <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
- -->
-    <!-- <script type='text/javascript' src="/scripts/nycresonance.js"></script> -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet'/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/0.12.78/Tone.js"></script>
     <script type='text/javascript' src="/scripts/MTA_MusicLocations.js"></script>
     <script type='text/javascript' src="/scripts/jquery-3.3.1.min.js"></script>
-    
+    <script type='text/javascript' src="scripts/spatialaudio.js"></script> 
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-
 </head>
+
 <body>
-      <div class="media_cover">
 
-      </div>
-      
-   <div id='map' class='map'></div>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
 
-    <script>
+    <div class="form_cover">
+        <form action="javascript:addspottedMarker(); javascript:formHide();">
+            <button id="formclosebutton" type="button" onclick="formHide();">x</button>
+            <br> 
+            Spotted a Musician?<br>
+            <br>
+            Until when are they playing?<br><br>
+          <input type="text" name="lastname" >
+          <br><br>
+          <input type="submit" value="Submit">
+        </form> 
+    </div>
+    <div class="media_cover"></div>
+    <div id='geocoder' class='geocoder'></div>
+    <div id='map' class='map'></div>
+        <script>
     if(!config) console.error("Config not set! Make a copy of 'config_template.js', add in your access token, and save the file as 'config.js'.");
     
     mapboxgl.accessToken = config.accessToken;
+var bounds = [
+                    [-74.031296, 40.699754], // nyc Southwest coordinates
+                    [-73.844528, 40.799629]  // nyc Northeast coordinates
+                ];
 
+var bins = 16;
+var maxHeight = 200;
+var binWidth = maxHeight / bins;
 
-  var bounds = [
-    [-74.031296, 40.699754], // Southwest coordinates
-    [-73.844528, 40.799629]  // Northeast coordinates
-];
+var geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+});
     
     //MAKE A MAP
     var map = new mapboxgl.Map({
-        style: 'mapbox://styles/mapbox/dark-v9', //mapbox://styles/mapbox/navigation-preview-night-v2, mapbox://styles/mapbox/dark-v9
+        style: 'mapbox://styles/mapbox/dark-v9', //mapbox://styles/mapbox/navigation-preview-night-v2, mapbox://styles/mapbox/dark-v9, mapbox://styles/examples/cj68bstx01a3r2rndlud0pwpv
         center: [-74.0066, 40.7135],
         zoom: 10,//15.5
         pitch: 45, //45
@@ -44,53 +61,52 @@
         hash: true,
         minZoom: 14,
         maxBounds: bounds,
-        container: 'map',
         doubleClickZoom: false,
-
+        container: 'map'
     });
-
-    map.on("load", function() {
-        // Insert the layer beneath any symbol layer.
-        var layers = map.getStyle().layers;
-
-        var labelLayerId;
-        for (var i = 0; i < layers.length; i++) {
-            if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
-                labelLayerId = layers[i].id;
-                break;
-            }
-        }
+            
+        map.on("load", function() {
+                // Insert the layer beneath any symbol layer.
+                var layers = map.getStyle().layers;
+                var labelLayerId;
+                for (var i = 0; i < layers.length; i++) {
+                    if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+                        labelLayerId = layers[i].id;
+                        break;
+                    }
+                }
 
         map.addLayer({
-        'id': '3d-buildings',
-        'source': 'composite',
-        'source-layer': 'building',
-        'filter': ['==', 'extrude', 'true'],
-        'type': 'fill-extrusion',
-        'minzoom': 4, //15
-        'paint': {
-            'fill-extrusion-color': '#aaa', //#aaa
+                'id': '3d-buildings',
+                'source': 'composite',
+                'source-layer': 'building',
+                'filter': ['==', 'extrude', 'true'],
+                'type': 'fill-extrusion',
+                'minzoom': 4, //15
+                'paint': {
+                    'fill-extrusion-color': '#aaa', //#aaa
+                    // use an 'interpolate' expression to add a smooth transition effect to the
+                    // buildings as the user zooms in
+                    'fill-extrusion-height':  
+                    [
+                        "interpolate", ["linear"], ["zoom"],
+                        4, 0, //15
+                        15.05, ["get", "height"]
+                    ],
+                    'fill-extrusion-base': 
+                    [
+                        "interpolate", ["linear"], ["zoom"],
+                        4, 0, //15
+                        15.05, ["get", "min_height"]
+                    ],
+                    'fill-extrusion-opacity': .8
+                }
+            },labelLayerId);  
+        });
 
-            // use an 'interpolate' expression to add a smooth transition effect to the
-            // buildings as the user zooms in
-            'fill-extrusion-height':  
-            [
-                "interpolate", ["linear"], ["zoom"],
-                4, 0, //15
-                15.05, ["get", "height"]
-            ],
-            'fill-extrusion-base': 
-            [
-                "interpolate", ["linear"], ["zoom"],
-                4, 0, //15
-                15.05, ["get", "min_height"]
-            ],
-
-            'fill-extrusion-opacity': .8
+        function formHide() {
+            $(".form_cover").hide();
         }
-    }, labelLayerId);
-
-
         var greenSphere = new Tone.Panner3D().toMaster();
         var drone = new Tone.Player({
             url : "/Data/Audio/drumadics.wav",
@@ -100,8 +116,8 @@ greenSphere.setPostion(x, y, z);
 
 
         // Initialize threebox
-        // window.threebox = new Threebox(map);
-        // threebox.setupDefaultLights();
+        window.threebox = new Threebox(map);
+        threebox.setupDefaultLights();
 
             var listener = new THREE.AudioListener();
             threebox.camera.add( listener );
@@ -143,7 +159,7 @@ greenSphere.setPostion(x, y, z);
 
             // Add the model to the threebox scenegraph at a specific geographic coordinate
             //threebox.addAtCoordinate(aircraft, planePosition);
-        });
+        // });
 
     // add markers to map
      geojson.features.forEach(function(marker) {
@@ -161,7 +177,49 @@ greenSphere.setPostion(x, y, z);
        .addTo(map);
      });
 
-    </script>
+        var latlng = "";
+        map.on('click', recordLatLongVals);
 
-    <script type='text/javascript' src="scripts/actions.js"></script>
+         function recordLatLongVals(e) {
+            latlng = e.lngLat;
+         }
+        var fileID = 0;
+        function addspottedMarker(){
+            fileID++;
+            //add layer of spotted musicians
+            console.log("submit clicked");
+            var elspotted = document.createElement('div');
+            elspotted.className = 'spottedmarker';
+            elspotted.setAttribute("id", 'fileID'+fileID );
+            var spottedmusician = new mapboxgl.Marker(elspotted).setLngLat(latlng).addTo(map);
+            setTimeout(function(){
+            $('#fileID'+fileID).remove();}, 5000);
+        }
+
+        // Add geolocate control to the map.
+            map.addControl(new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true
+            }));
+
+        // add markers to map
+            geojson.features.forEach(function(marker) {
+            elementId = marker.properties.description.split(' ').join('_');
+        // create a HTML element for each feature
+            var el = document.createElement('div');
+            el.className = 'marker';
+            el.setAttribute("id", elementId);
+        // make a marker for each feature and add to the map
+            new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+        });
+
+var geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+});
+
+document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+    </script>
+        <script type='text/javascript' src="scripts/actions.js"></script>
 </body>
