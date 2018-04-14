@@ -91,6 +91,25 @@ position: absolute;
     display: none;
 }
 
+
+.about_cover {
+    font-family : 'Courier New', monospace;
+    background: rgba(255, 255, 255, 0.6);
+    font-weight: bold;
+    text-shadow: 2px 2px #ff0000;
+    font-size: 40px;
+    top:20px;
+    right: 100px;
+    text-align: right;
+    /*padding-right: 40px;*/
+    padding-left: 500px;
+    padding-top: 200px;
+    display: none;
+    /*height: 100vh;
+    width: 100vw;*/
+
+}
+
 #formclosebutton {
     align-content: left;
 }
@@ -122,17 +141,7 @@ position: absolute;
 }
 
 .media_text{
-    font-family : 'Courier New', monospace;
-    font-weight: bold;
-    text-shadow: 2px 2px #ff0000;
-    font-size: 40px;
-    background-color: transparent;
-    top:20px;
-    right: 100px;
-    text-align: right;
-    padding-right: 40px;
-    padding-left: 500px;
-    padding-top: 200px;
+
 }
 
 
