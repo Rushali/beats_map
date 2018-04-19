@@ -54,7 +54,8 @@ body, html {
 }
 
 .marker {
-background-image: url('/Data/Images/animatedmusic.gif'); /*//placeholder.png*/
+background-image: url('/Data/Images/placeholder.png'); /*//placeholder.png*/
+
 background-size: cover;
 width: 75px;
 height: 75px;
@@ -63,10 +64,10 @@ cursor: pointer;
 }
 
 .spottedmarker {
-background-image: url('/Data/Images/placeholder.png'); 
+background-image: url('/Data/Images/mic.gif'); 
 background-size: cover;
-width: 75px;
-height: 75px;
+width: 400px;
+height: 300px;
 border-radius: 50%;
 cursor: pointer; 
 }
@@ -113,20 +114,41 @@ position: absolute;
 #formclosebutton {
     align-content: left;
 }
-
-.form_cover {
+.form_cover{
     display: none;
     z-index: 1000 !important;
     font-family : 'Courier New', monospace;
     font-size: 18px;
-    background: #53ecf4;
+    background: transparent;
     position: absolute;
     top: 30%;
     left: 30%;
-    padding: 15px 25px;
+    /*padding: 15px 25px;*/
     outline: none;
     border: none;
-    border-radius: 15px;
+    /*border-radius: 15px;*/
+    text-align: center;
+    text-decoration: none;
+    height: 600px;
+    width: 400px;
+}
+
+
+.form_content {
+    display: block;
+    z-index: 1000 !important;
+    font-family : 'Courier New', monospace;
+    font-size: 18px;
+    background: white;
+    position: absolute;
+    height: 400px;
+    width: 400px;
+  /*  top: 30%;
+    left: 30%;*/
+    /*padding: 15px 25px;*/
+    outline: none;
+    border: none;
+    /*border-radius: 15px;*/
     text-align: center;
     text-decoration: none;
 }
@@ -163,3 +185,16 @@ position: absolute;
     z-index: 10000 !important
 
 }
+
+.arrow-down {
+    display: none;
+    width: 0;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-top: 120px solid #fff;
+    display: inline-block;
+    bottom: 0 !important;
+    margin-top: 400px;
+}
+}
+

@@ -20,9 +20,6 @@ var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken
 });
 
-//var stayTime = document.getElementById("appt-time").value();
-//console.log(stayTime);
-
 //MAKE A MAP
 var map = new mapboxgl.Map({
     style: "mapbox://styles/mapbox/dark-v9", //mapbox://styles/mapbox/navigation-preview-night-v2, mapbox://styles/mapbox/dark-v9, mapbox://styles/examples/cj68bstx01a3r2rndlud0pwpv
@@ -36,7 +33,8 @@ var map = new mapboxgl.Map({
     container: "map"
 });
 
-map.on("load", function() {
+
+map.on("load", 'point', function() {
     // Insert the layer beneath any symbol layer.
     var layers = map.getStyle().layers;
     var labelLayerId;
@@ -82,6 +80,13 @@ map.on("load", function() {
         },
         labelLayerId
     );
+});
+
+map.on('mousemove', function (e) {
+        var positions =
+        // e.point is the x, y coordinates of the mousemove event relative to top left corner
+        JSON.stringify(e.point) ;
+        //console.log(positions);
 });
 
 function formHide() {
