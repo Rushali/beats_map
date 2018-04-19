@@ -3,7 +3,7 @@ if (!config)
         "Config not set! Make a copy of 'config_template.js', add in your access token, and save the file as 'config.js'."
     );
 
-const now = new Date();
+// const now = new Date();
 //console.log(now.getHours()+" "+now.getMinutes());
 
 mapboxgl.accessToken = config.accessToken;
@@ -15,6 +15,10 @@ var bounds = [
 var bins = 16;
 var maxHeight = 200;
 var binWidth = maxHeight / bins;
+
+var nameValue;
+var untilWhen;
+var mediaURL;
 
 var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken
@@ -34,7 +38,7 @@ var map = new mapboxgl.Map({
 });
 
 
-map.on("load", 'point', function() {
+map.on("load", function() {
     // Insert the layer beneath any symbol layer.
     var layers = map.getStyle().layers;
     var labelLayerId;
@@ -45,8 +49,7 @@ map.on("load", 'point', function() {
         }
     }
 
-    map.addLayer(
-        {
+    map.addLayer({
             id: "3d-buildings",
             source: "composite",
             "source-layer": "building",
@@ -58,22 +61,18 @@ map.on("load", 'point', function() {
                 // use an 'interpolate' expression to add a smooth transition effect to the
                 // buildings as the user zooms in
                 "fill-extrusion-height": [
-                    "interpolate",
-                    ["linear"],
+                    "interpolate", ["linear"],
                     ["zoom"],
                     4,
                     0, //15
-                    15.05,
-                    ["get", "height"]
+                    15.05, ["get", "height"]
                 ],
                 "fill-extrusion-base": [
-                    "interpolate",
-                    ["linear"],
+                    "interpolate", ["linear"],
                     ["zoom"],
                     4,
                     0, //15
-                    15.05,
-                    ["get", "min_height"]
+                    15.05, ["get", "min_height"]
                 ],
                 "fill-extrusion-opacity": 0.8
             }
@@ -81,6 +80,8 @@ map.on("load", 'point', function() {
         labelLayerId
     );
 });
+
+
 
 // add markers to map
 geojson.features.forEach(function(marker) {
@@ -93,11 +94,11 @@ geojson.features.forEach(function(marker) {
     new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
 });
 
-map.on('mousemove', function (e) {
-        var positions =
+map.on('mousemove', function(e) {
+    var positions =
         // e.point is the x, y coordinates of the mousemove event relative to top left corner
-        JSON.stringify(e.point) ;
-        //console.log(positions);
+        JSON.stringify(e.point);
+    //console.log(positions);
 });
 
 function formHide() {
@@ -105,17 +106,16 @@ function formHide() {
 }
 
 var latlng = "";
+
 map.on("click", recordLatLongVals);
 
 function recordLatLongVals(e) {
     latlng = e.lngLat;
+
 }
 var fileID = 0;
 
 function addspottedMarker() {
-    var timehours = now.getHours();
-    var timemins = now.getMinutes();
-
     fileID++;
     //add layer of spotted musicians
     console.log("musician spotted submit clicked");
@@ -124,13 +124,24 @@ function addspottedMarker() {
     var spottedmusician = new mapboxgl.Marker(elspotted)
         .setLngLat(latlng)
         .addTo(map);
-
+    
+    nameValue = document.getElementById("musiciansname").value;
+    untilWhen = document.getElementById("untilWhen").value;
+    var timeSplit = untilWhen.split(':');
+    var disappearhour = timeSplit[0];
+    var disappearmin = timeSplit[1];
+    //mediaURL = document.getElementById("mediaURL").value;
+    var now = new Date();
+    var disappearAt = new Date(now.getFullYear(), now.getMonth(), now.getDate(),disappearhour, disappearmin, 0, 0) - now;
+    if (disappearAt < 0) {
+     disappearAt += 86400000; // it's after 10am, try 10am tomorrow.
+        }
     setTimeout(function() {
         spottedmusician.remove();
+        console.log("spotted musician removed");
+    }, disappearAt);
 
-    }, 5000);
-
-    pushData(fileID, latlng, timehours, now);
+    pushData(fileID, latlng, untilWhen, now);
 }
 
 function pushData(name, place, time, timestamp) {
