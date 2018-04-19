@@ -5,9 +5,7 @@ $(document).ready(function() {
     $('body').prepend('<button class="about_button" type="button">NYC BEATS</button>');
 
     $(".marker").click(function(element) {
-        console.log('wtf');
         markerClicked = true;
-        //console.log('i see you....');
         $('.media_cover').empty();
         $(".media_cover").show();
         // adding a close button
@@ -60,9 +58,10 @@ $(document).ready(function() {
         })
     });
 
-    $('#map').click(function(element) {
+    $('#map').click(function(e) {
+        console.log(dragFlag);
         console.log(markerClicked);
-        if (!markerClicked) {
+        if (!markerClicked && dragFlag == 0) {
             console.log('map clicked');
             $('.form_cover').show();
             $('.arrow-down').show();
@@ -83,14 +82,6 @@ $(document).ready(function() {
             add_close_listener();
         });
     });
-
-
-
-
-var nameValue = document.getElementById("musiciansname").value;
-console.log(nameValue);
-
-
 
     function add_close_listener() {
         markerClicked = false;

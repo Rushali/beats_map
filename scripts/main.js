@@ -11,7 +11,7 @@ var bounds = [
     [-74.031296, 40.699754], // nyc Southwest coordinates
     [-73.844528, 40.799629] // nyc Northeast coordinates
 ];
-
+var dragFlag = 0;
 var bins = 16;
 var maxHeight = 200;
 var binWidth = maxHeight / bins;
@@ -39,6 +39,8 @@ var map = new mapboxgl.Map({
 
 
 map.on("load", function() {
+    // new DragPanHandler(map);
+    // map.dragPan.disable();
     // Insert the layer beneath any symbol layer.
     var layers = map.getStyle().layers;
     var labelLayerId;
@@ -79,9 +81,11 @@ map.on("load", function() {
         },
         labelLayerId
     );
+
+    console.log('getting data');
+    //get the data from the DB
+    getData();
 });
-
-
 
 // add markers to map
 geojson.features.forEach(function(marker) {
@@ -95,6 +99,7 @@ geojson.features.forEach(function(marker) {
 });
 
 map.on('mousemove', function(e) {
+    dragFlag = 1;
     var positions =
         // e.point is the x, y coordinates of the mousemove event relative to top left corner
         JSON.stringify(e.point);
@@ -106,12 +111,14 @@ function formHide() {
 }
 
 var latlng = "";
+map.on("mousedown", function() {
+    dragFlag = 0;
+})
 
-map.on("click", recordLatLongVals);
+map.on("mouseup", recordLatLongVals);
 
 function recordLatLongVals(e) {
     latlng = e.lngLat;
-
 }
 var fileID = 0;
 
@@ -124,7 +131,7 @@ function addspottedMarker() {
     var spottedmusician = new mapboxgl.Marker(elspotted)
         .setLngLat(latlng)
         .addTo(map);
-    
+
     nameValue = document.getElementById("musiciansname").value;
     untilWhen = document.getElementById("untilWhen").value;
     var timeSplit = untilWhen.split(':');
@@ -132,24 +139,26 @@ function addspottedMarker() {
     var disappearmin = timeSplit[1];
     //mediaURL = document.getElementById("mediaURL").value;
     var now = new Date();
-    var disappearAt = new Date(now.getFullYear(), now.getMonth(), now.getDate(),disappearhour, disappearmin, 0, 0) - now;
+    var disappearAt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), disappearhour, disappearmin, 0, 0) - now;
     if (disappearAt < 0) {
-     disappearAt += 86400000; // it's after 10am, try 10am tomorrow.
-        }
+        disappearAt += 86400000; // it's after 10am, try 10am tomorrow.
+    }
     setTimeout(function() {
         spottedmusician.remove();
         console.log("spotted musician removed");
     }, disappearAt);
 
-    pushData(fileID, latlng, untilWhen, now);
+    pushData(fileID, name, URL, latlng, untilWhen, now);
 }
 
-function pushData(name, place, time, timestamp) {
+function pushData(fileID, name, URL, latlng, untilWhen, now) {
     var data = JSON.stringify({
+        fileID: fileID,
         name: name,
-        place: place,
-        time: time,
-        timestamp: timestamp
+        URL: URL,
+        latlng: latlng,
+        untilWhen: untilWhen,
+        now: now
     });
     var database = firebase.database();
     var musicianDb = database.ref("musicianlocations");
@@ -158,14 +167,22 @@ function pushData(name, place, time, timestamp) {
 
 function getData() {
     //get
-    var id = "-KVKnwa-MsPXzNbNHdmK";
-    var ref = database.ref("musicianlocations/" + id);
-    ref.on("value", gotOne, errData);
+    // var database = firebase.database();
+    // var musicianDb = database.ref("musicianlocations");
+    // var id = "-KVKnwa-MsPXzNbNHdmK";
+    // var ref = database.ref("musicianlocations/" + id);
+    // ref.on("value", gotOne, errData);
 
-    function gotOne(data) {
-        console.log(data);
-        //var fruit = data.val();
-    }
+    // function gotOne(data) {
+    //     console.log(data);
+    //     //var fruit = data.val();
+    // }
+
+
+    var starCountRef = firebase.database().ref('musicianlocations/');
+    starCountRef.on('value', function(snapshot) {
+        console.log(snapshot.val())
+    });
 }
 
 function getAll() {
