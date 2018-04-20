@@ -19,6 +19,7 @@ var binWidth = maxHeight / bins;
 var nameValue;
 var untilWhen;
 var mediaURL;
+var firebaseDatabase;
 
 var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken
@@ -82,7 +83,7 @@ map.on("load", function() {
         labelLayerId
     );
 
-    console.log('getting data');
+    //console.log('getting data');
     //get the data from the DB
     getData();
 });
@@ -126,14 +127,15 @@ function addspottedMarker() {
     fileID++;
     //add layer of spotted musicians
     console.log("musician spotted submit clicked");
-    var elspotted = document.createElement("div");
-    elspotted.className = "spottedmarker";
-    var spottedmusician = new mapboxgl.Marker(elspotted)
-        .setLngLat(latlng)
-        .addTo(map);
+    // var elspotted = document.createElement("div");
+    // elspotted.className = "spottedmarker";
+    // var spottedmusician = new mapboxgl.Marker(elspotted)
+    //     .setLngLat(latlng)
+    //     .addTo(map);
 
     nameValue = document.getElementById("musiciansname").value;
     untilWhen = document.getElementById("untilWhen").value;
+    mediaURL = document.getElementById("mediaURL").value;
     var timeSplit = untilWhen.split(':');
     var disappearhour = timeSplit[0];
     var disappearmin = timeSplit[1];
@@ -143,19 +145,19 @@ function addspottedMarker() {
     if (disappearAt < 0) {
         disappearAt += 86400000; // it's after 10am, try 10am tomorrow.
     }
-    setTimeout(function() {
-        spottedmusician.remove();
-        console.log("spotted musician removed");
-    }, disappearAt);
+    // setTimeout(function() {
+    //     spottedmusician.remove();
+    //     console.log("spotted musician removed");
+    // }, disappearAt);
 
-    pushData(fileID, name, URL, latlng, untilWhen, now);
+    pushData(fileID, nameValue, mediaURL, latlng, untilWhen, now);
 }
 
-function pushData(fileID, name, URL, latlng, untilWhen, now) {
+function pushData(fileID, nameValue, mediaURL, latlng, untilWhen, now) {
     var data = JSON.stringify({
         fileID: fileID,
-        name: name,
-        URL: URL,
+        nameValue: nameValue,
+        mediaURL: mediaURL,
         latlng: latlng,
         untilWhen: untilWhen,
         now: now
@@ -166,35 +168,128 @@ function pushData(fileID, name, URL, latlng, untilWhen, now) {
 }
 
 function getData() {
-    //get
-    // var database = firebase.database();
-    // var musicianDb = database.ref("musicianlocations");
-    // var id = "-KVKnwa-MsPXzNbNHdmK";
-    // var ref = database.ref("musicianlocations/" + id);
-    // ref.on("value", gotOne, errData);
-
-    // function gotOne(data) {
-    //     console.log(data);
-    //     //var fruit = data.val();
-    // }
-
-
     var starCountRef = firebase.database().ref('musicianlocations/');
-    starCountRef.on('value', function(snapshot) {
-        console.log(snapshot.val())
-    });
+    starCountRef.on('value', gotData, errData);
+    //     (snapshot) {
+    //     firebaseDatabase = snapshot.val();
+    //     console.log(firebaseDatabase);
+    // });
+    function gotData(data) {
+        console.log("gotData");
+
+        // cleaning the page
+        var existingMarkers = document.getElementsByClassName('spottedmarker');
+        for (var m=0; m<existingMarkers.length; m++){
+            existingMarkers[m].remove();
+        }
+
+        var musdb = data.val();
+
+        var keys = Object.keys(musdb);
+
+        for (var i = 0; i < keys.length; i++) {
+
+            console.log(keys)
+
+            // check that the object was created today
+            // year
+            var year = parseInt(musdb[keys[i]]['now'].split('-')[0]);
+
+            if (year < new Date().getFullYear()){
+                
+                // detele on firebase
+                firebase.database().ref('musicianlocations/').child(keys[i]).remove();
+
+                // continue
+                continue;
+
+            }
+
+            // month
+            var month = parseInt(musdb[keys[i]]['now'].split('-')[1]);
+            if (month < (new Date().getMonth() + 1)){
+                
+                // detele on firebase
+                firebase.database().ref('musicianlocations/').child(keys[i]).remove();
+
+                // continue
+                continue;
+
+            }
+
+            // day
+            var day = parseInt(musdb[keys[i]]['now'].split('-')[2]);
+            if (year < new Date().getDate()){
+                
+                // detele on firebase
+                firebase.database().ref('musicianlocations/').child(keys[i]).remove();
+
+                // continue
+                continue;
+
+            }
+
+
+            // console.log(musdb[keys[i]]['now'])
+
+            // creating an array for the time now
+            var nowNow = [];
+
+            // pushing the hours now to nowNow[0]
+            nowNow.push(new Date().getHours());
+
+            // pushing the hours now to nowNow[1]
+            nowNow.push(new Date().getMinutes());
+
+            // creating an array for untilNow[hours, minutes]
+            var untilWhen = musdb[keys[i]]['untilWhen'].split(':');
+
+            // parsing the strings to ints
+            untilWhen[0] = parseInt(untilWhen[0]);
+            untilWhen[1] = parseInt(untilWhen[1]);
+
+            if (nowNow[0] < untilWhen[0]) {
+
+                // adding graphics
+                var elspotted = document.createElement("div");
+                elspotted.className = "spottedmarker";
+                elspotted.id = keys[i];
+                var spottedmusician = new mapboxgl.Marker(elspotted)
+                    .setLngLat(musdb[keys[i]]['latlng'])
+                    .addTo(map);
+
+            } else if (nowNow[0] == untilWhen[0]) {
+
+                if (nowNow[1] < untilWhen[1]) {
+                // adding graphics
+                var elspotted = document.createElement("div");
+                elspotted.className = "spottedmarker";
+                elspotted.id = keys[i];
+                var spottedmusician = new mapboxgl.Marker(elspotted)
+                    .setLngLat(musdb[keys[i]]['latlng'])
+                    .addTo(map);  
+                
+                } else {
+                    // delete the firebase object
+                    firebase.database().ref('musicianlocations/').child(keys[i]).remove();
+                
+                }
+
+            } else {
+                // delete the firebase object
+                firebase.database().ref('musicianlocations/').child(keys[i]).remove();
+            
+            }
+
+        }
+    }
+
+    function errData(){
+        console.log("massive error");
+    }
+
 }
 
-function getAll() {
-    firebase
-        .database()
-        .ref("/musicianlocations/")
-        .once("value")
-        .then(function(snapshot) {
-            console.log(snapshot.val());
-        });
-
-}
 // Add geolocate control to the map.
 map.addControl(
     new mapboxgl.GeolocateControl({
@@ -208,8 +303,6 @@ map.addControl(
 //Initialize threebox
 window.threebox = new Threebox(map);
 threebox.setupDefaultLights();
-
-
 
 var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken

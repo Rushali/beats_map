@@ -1,10 +1,11 @@
 <!doctype html>
+
 <head>
     <title>🥑 NYC BEATS</title>
     <script src="/dist/threebox.js" type="text/javascript"></script>
     <script src="/scripts/config.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet'/>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script>
     <script type='text/javascript' src="/scripts/MTA_MusicLocations.js"></script>
     <script type='text/javascript' src="/scripts/jquery-3.3.1.min.js"></script>
@@ -12,9 +13,10 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 </head>
+
 <body>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css'/>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
     <div class="about_cover">
         <p>A web art experiment for New York’s iconic subway musicians and their underground audiences, NYC Beats explores how to connect these artists in real time to engage their spectators digitally via crowdsourced location information displayed on a 3-dimensional map.</p>
     </div>
@@ -22,15 +24,20 @@
         <div class="form_content">
             <form action="javascript:addspottedMarker(); javascript:formHide();">
                 <button id="formclosebutton" type="button" onclick="formHide();">x</button>
-                <br><h1>Spotted a Musician?</h1>
                 <br>
-                Name
-                <input id="musiciansname" type="text" name="Musician's Name" value="Musician's Name"><br><br>
-                Until when are they playing?<br><br>
+                <h1>Spotted a Musician?</h1>
+                <br> Name
+                <input id="musiciansname" type="text" name="Musician's Name" value="Musician's Name">
+                <br>
+                <br> Until when are they playing?
+                <br>
+                <br>
                 <input id="untilWhen" type="time" name="appt-time" value="13:30">
-                <br><br>
-                Social Media URL
-                <input type="text" name="URL" value="link"><br><br>
+                <br>
+                <br> Social Media URL
+                <input id="mediaURL" type="text" name="URL" value="link">
+                <br>
+                <br>
                 <input type="submit" value="Submit">
             </form>
         </div>
