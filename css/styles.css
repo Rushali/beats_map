@@ -65,10 +65,10 @@ html {
 }
 
 .spottedmarker {
-    background-image: url('/Data/Images/mic.gif');
+    background-image: url('/Data/Images/drum.gif');
     background-size: cover;
-    width: 400px;
-    height: 300px;
+    width: 200px;
+    height: 150px;
     border-radius: 50%;
     cursor: pointer;
 }

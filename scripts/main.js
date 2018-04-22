@@ -23,6 +23,15 @@ var firebaseDatabase;
 
 var musedb;
 
+// var gifs = ['/Data/Images/drum.gif',
+//             '/Data/Images/mic.gif',
+//             '/Data/Images/guitar.gif'];
+
+// var randomNumber = Math.floor(Math.random()*gifs.length);
+// var spottedgif = 'url('+gifs[randomNumber]+')';
+
+//document.getElementsByClassName("").style.backgroundImage=bigSize[random];
+
 var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken
 });
@@ -301,8 +310,10 @@ map.addControl(
 
 var now = new Date();
 var later = new Date(Date.now()+(6*60*60*1000));
-var laterTime = String(later.getMinutes())+":"+String(later.getMinutes());
-var nowTime = String(now.getHours())+":"+String(now.getMinutes())
+var laterTime = String(later.getHours())+":"+String(later.getMinutes());
+var nowTime = String(now.getHours())+":"+String(now.getMinutes());
+
+//console.log(laterTime);
 
 document.getElementById('untilWhen').min = nowTime;
 document.getElementById('untilWhen').max = laterTime;

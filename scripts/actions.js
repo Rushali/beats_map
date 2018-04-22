@@ -88,7 +88,14 @@ $(document).ready(function() {
         });
     });
 
-    $
+    var gifs = ['/Data/Images/drum.gif',
+            '/Data/Images/mic.gif',
+            '/Data/Images/guitar.gif'];
+
+    var randomNumber = Math.floor(Math.random() * gifs.length);
+    var classToAdd = gifs[randomNumber];
+
+$('.spottedmarker').addClass(classToAdd);
 
     function add_close_listener() {
         markerClicked = false;
