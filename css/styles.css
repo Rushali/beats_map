@@ -85,7 +85,7 @@ html {
 }
 
 .media_cover {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.5);
     height: 100vh;
     width: 100vw;
     position: absolute;
@@ -96,18 +96,20 @@ html {
 
 .about_cover {
     font-family: 'Courier New', monospace;
-    background: rgba(255, 255, 255, 0.6);
     font-weight: bold;
     text-shadow: 2px 2px #ff0000;
     font-size: 40px;
     top: 20px;
     right: 100px;
     text-align: right;
-    /*padding-right: 40px;*/
+    padding-right: 60px;
     padding-left: 500px;
     padding-top: 200px;
     display: none;
-    /*height: 100vh;
+    background: rgba(255, 255, 255, 0.5);
+/*    position: absolute;*/
+ /*   z-index: 1000 !important;
+    height: 100vh;
     width: 100vw;*/
 }
 
