@@ -2,6 +2,8 @@ console.log('🌮 taco');
 var markerClicked = false;
 $(document).ready(function() {
 
+
+
     $('body').prepend('<button class="about_button" type="button">NYC BEATS</button>');
 
     $(".marker").click(function(element) {
@@ -59,16 +61,19 @@ $(document).ready(function() {
     });
 
     $('#map').click(function(e) {
-        console.log(dragFlag);
-        console.log(markerClicked);
+        //console.log(dragFlag);
+        //console.log(markerClicked);
         if (!markerClicked && dragFlag == 0) {
-            console.log('map clicked');
+            //console.log('map clicked');
             $('.form_cover').show();
             $('.arrow-down').show();
         } else {}
     });
+
+    //$('#untilWhen').val(new Date().toDateInputValue());
+
     $(".about_button").click(function(element) {
-        console.log('about button');
+        //console.log('about button');
         // adding the cover
         // $('body').prepend('<div class="media_cover"></div>')
         $('.about_cover').show();
@@ -78,14 +83,16 @@ $(document).ready(function() {
         // adding an event listener to close the cover
 
         $(".close_button").on("click", function() {
-            console.log("close button clicked");
+            //console.log("close button clicked");
             add_close_listener();
         });
     });
 
+    $
+
     function add_close_listener() {
         markerClicked = false;
-        console.log(markerClicked);
+        //console.log(markerClicked);
         $('.about_cover').hide();
         $('.media_cover').hide();
         $('.media_text').remove();
