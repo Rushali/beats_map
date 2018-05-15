@@ -175,7 +175,7 @@ var geojson = {
                 },
                 properties: {
                   title: 'MUNY',
-                  description: '28th STREET, Lexington Avenue'
+                  description: '28th STREET Lexington Avenue'
                 }
               },
               {

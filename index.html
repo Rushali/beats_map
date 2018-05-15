@@ -1,5 +1,4 @@
 <!doctype html>
-
 <head>
     <title>🥑 NYC BEATS</title>
     <script src="/dist/threebox.js" type="text/javascript"></script>
@@ -13,7 +12,6 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 </head>
-
 <body>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
@@ -21,37 +19,40 @@
         <p>A web art experiment for New York’s iconic subway musicians and their underground audiences, NYC Beats explores how to connect these artists in real time to engage their spectators digitally via crowdsourced location information displayed on a 3-dimensional map.
             <br><br>
             <a href="https://goo.gl/forms/Ph4fKxtGsWuSsze42">Tell me something fun!<a>
-            <br><br>
-        Icon made by Baianat from www.flaticon.com
-        </p>
-    </div>
-    <div class="form_cover">
-        <div class="form_content">
-            <form action="javascript:addspottedMarker(); javascript:formHide();">
-                <button id="formclosebutton" type="button" onclick="formHide();">x</button>
-                <br>
-                <h1>Spotted a Musician?</h1>
-                <br> Musician's Name
-                <input id="musiciansname" type="text" name="Musician's Name" value="">
-                <br>
-                <br> Until when are they playing?
-                <br>
-                <br>
-                <input id="untilWhen" type="time" min="" max="" name="appt-time" required>
-                <br>
-                <br> Social Media URL
-                <input id="mediaURL" type="text" name="URL" value="">
-                <br>
-                <br>
-                <input type="submit" value="Submit">
-            </form>
+                <br><br>
+                Icon made by Baianat from www.flaticon.com
+            </p>
         </div>
-        <div class="arrow-down"></div>
-    </div>
-    <div class="media_cover"></div>
-    <div id='geocoder' class='geocoder'></div>
-    <div id='map' class='map'></div>
-    </script>
-    <script type='text/javascript' src="scripts/actions.js"></script>
-    <script type='text/javascript' src="scripts/main.js"></script>
-</body>
+        <div class="MUNY"><p>
+            Since 1985, Arts and Design has managed the Music Under New York (MTA MUSIC) program, to bring joyous and engaging  music to the commuting public. Currently, more than 350 soloists and groups participate in MTA MUSIC providing over 7,500 annual performances at 30 locations throughout the transit system. Classical violinists, Cajun cellists, jazz ensembles, bluesmen, Latin guitarists, opera and folk singers are just a few of the performers in the subway and train stations contributing to the music culture of New York City.
+        </p></div>
+        <div class="form_cover">
+            <div class="form_content">
+                <form action="javascript:addspottedMarker(); javascript:formHide();">
+                    <button id="formclosebutton" type="button" onclick="formHide();">x</button>
+                    <br>
+                    <h1>Spotted a Musician?</h1>
+                    <br> Musician's Name
+                    <input id="musiciansname" type="text" name="Musician's Name" value="">
+                    <br>
+                    <br> Until when are they playing?
+                    <br>
+                    <br>
+                    <input id="untilWhen" type="time" min="" max="" name="appt-time" required>
+                    <br>
+                    <br> Social Media URL
+                    <input id="mediaURL" type="text" name="URL" value="">
+                    <br>
+                    <br>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="arrow-down"></div>
+        </div>
+        <div class="media_cover"></div>
+        <div id='geocoder' class='geocoder'></div>
+        <div id='map' class='map'></div>
+        </script>
+        <script type='text/javascript' src="scripts/actions.js"></script>
+        <script type='text/javascript' src="scripts/main.js"></script>
+    </body>
