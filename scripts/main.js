@@ -51,8 +51,6 @@ var map = new mapboxgl.Map({
 
 
 map.on("load", function() {
-    // new DragPanHandler(map);
-    // map.dragPan.disable();
     // Insert the layer beneath any symbol layer.
     var layers = map.getStyle().layers;
     var labelLayerId;
@@ -97,6 +95,39 @@ map.on("load", function() {
     //console.log('getting data');
     //get the data from the DB
     getData();
+
+    // Create a popup, but don't add it to the map yet.
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'spottedmarker', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+        console.log('im hovering')
+
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+    });
+
+    map.on('mouseleave', 'spottedmarker', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
 });
 
 // add markers to map
@@ -138,29 +169,17 @@ function addspottedMarker() {
     fileID++;
     //add layer of spotted musicians
     console.log("musician spotted submit clicked");
-    // var elspotted = document.createElement("div");
-    // elspotted.className = "spottedmarker";
-    // var spottedmusician = new mapboxgl.Marker(elspotted)
-    //     .setLngLat(latlng)
-    //     .addTo(map);
-
     nameValue = document.getElementById("musiciansname").value;
     untilWhen = document.getElementById("untilWhen").value;
     mediaURL = document.getElementById("mediaURL").value;
     var timeSplit = untilWhen.split(':');
     var disappearhour = timeSplit[0];
     var disappearmin = timeSplit[1];
-    //mediaURL = document.getElementById("mediaURL").value;
     var now = new Date();
     var disappearAt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), disappearhour, disappearmin, 0, 0) - now;
     if (disappearAt < 0) {
         disappearAt += 86400000; // it's after 10am, try 10am tomorrow.
     }
-    // setTimeout(function() {
-    //     spottedmusician.remove();
-    //     console.log("spotted musician removed");
-    // }, disappearAt);
-
     pushData(fileID, nameValue, mediaURL, latlng, untilWhen, now);
 }
 
@@ -187,58 +206,39 @@ function getData() {
     // });
     function gotData(data) {
         //console.log("gotData");
-
         // cleaning the page
         var existingMarkers = document.getElementsByClassName('spottedmarker');
         for (var m = 0; m < existingMarkers.length; m++) {
             existingMarkers[m].remove();
         }
-
         musdb = data.val();
         var keys = Object.keys(musdb);
-
         for (var i = 0; i < keys.length; i++) {
-
             // check that the object was created today
             // year
             var year = parseInt(musdb[keys[i]]['now'].split('-')[0]);
-
             if (year < new Date().getFullYear()) {
-
-                // detele on firebase
+                // delete on firebase
                 firebase.database().ref('musicianlocations/').child(keys[i]).remove();
-
                 // continue
                 continue;
-
             }
-
             // month
             var month = parseInt(musdb[keys[i]]['now'].split('-')[1]);
             if (month < (new Date().getMonth() + 1)) {
-
-                // detele on firebase
+                // delete on firebase
                 firebase.database().ref('musicianlocations/').child(keys[i]).remove();
-
                 // continue
                 continue;
-
             }
-
             // day
             var day = parseInt(musdb[keys[i]]['now'].split('-')[2]);
             if (year < new Date().getDate()) {
-
                 // detele on firebase
                 firebase.database().ref('musicianlocations/').child(keys[i]).remove();
-
                 // continue
                 continue;
-
             }
-
-
-            // console.log(musdb[keys[i]]['now'])
 
             // creating an array for the time now
             var nowNow = [];
