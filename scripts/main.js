@@ -95,39 +95,7 @@ map.on("load", function() {
     //console.log('getting data');
     //get the data from the DB
     getData();
-
-    // Create a popup, but don't add it to the map yet.
-    var popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false
-    });
-
-    map.on('mouseenter', 'spottedmarker', function(e) {
-        // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = 'pointer';
-        console.log('im hovering')
-
-        var coordinates = e.features[0].geometry.coordinates.slice();
-        var description = e.features[0].properties.description;
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        // Populate the popup and set its coordinates
-        // based on the feature found.
-        popup.setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
-    });
-
-    map.on('mouseleave', 'spottedmarker', function() {
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-    });
+    // spottedpopup();
 });
 
 // add markers to map
@@ -159,6 +127,37 @@ map.on("mousedown", function() {
 })
 
 map.on("mouseup", recordLatLongVals);
+
+// function spottedpopup(){
+   
+
+//     map.on('mouseenter', 'spottedmarker', function(e) {
+//         // Change the cursor style as a UI indicator.
+//         map.getCanvas().style.cursor = 'pointer';
+//         console.log('im hovering');
+
+//         var coordinates = e.features[0].geometry.coordinates.slice();
+//         var description = e.features[0].properties.description;
+
+//         // Ensure that if the map is zoomed out such that multiple
+//         // copies of the feature are visible, the popup appears
+//         // over the copy being pointed to.
+//         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+//             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+//         }
+
+//         // Populate the popup and set its coordinates
+//         // based on the feature found.
+//         popup.setLngLat(coordinates)
+//             .setHTML(description)
+//             .addTo(map);
+//     });
+
+//     map.on('mouseleave', 'spottedmarker', function() {
+//         map.getCanvas().style.cursor = '';
+//         popup.remove();
+//     });
+// }
 
 function recordLatLongVals(e) {
     latlng = e.lngLat;
@@ -251,6 +250,7 @@ function getData() {
 
             // creating an array for untilNow[hours, minutes]
             var untilWhen = musdb[keys[i]]['untilWhen'].split(':');
+            var medialink = musdb[keys[i]]['mediaURL'];
 
             // parsing the strings to ints
             untilWhen[0] = parseInt(untilWhen[0]);
@@ -259,23 +259,66 @@ function getData() {
             if (nowNow[0] < untilWhen[0]) {
 
                 // adding graphics
+                //console.log("POOP");
                 var elspotted = document.createElement("div");
                 elspotted.className = "spottedmarker";
                 elspotted.id = keys[i];
+
+                 var eltspottedtext = document.createElement("div");
+                 var line3= document.createElement("h3");
+                 line3.innerHTML = musdb[keys[i]]['nameValue'];
+                 var line1= document.createElement("p");
+                 line1.innerHTML = "Playing Until "+musdb[keys[i]]['untilWhen'];
+                 var line2= document.createElement("a");
+                 line2.innerHTML = medialink;
+                 line2.href = medialink;
+                 eltspottedtext.className = "elt-spotted-text";
+                    
+                //console.log(elspotted);
+                eltspottedtext.appendChild(line3);
+                eltspottedtext.appendChild(line1);
+                eltspottedtext.appendChild(line2);
+
+                elspotted.appendChild(eltspottedtext);
+
                 var spottedmusician = new mapboxgl.Marker(elspotted)
                     .setLngLat(musdb[keys[i]]['latlng'])
                     .addTo(map);
 
+                elspotted.onmouseover= function(elt) {
+                    //console.log(elt)
+                    id = "#" + this.id + " .elt-spotted-text";
+                    $(id).show();
+                }
+                elspotted.onmouseout= function(elt) {
+                    //console.log(elt)
+                    id = "#" + this.id + " .elt-spotted-text";
+                    $(id).hide();
+                }
+
             } else if (nowNow[0] == untilWhen[0]) {
 
                 if (nowNow[1] < untilWhen[1]) {
+
                     // adding graphics
                     var elspotted = document.createElement("div");
                     elspotted.className = "spottedmarker";
                     elspotted.id = keys[i];
+
+                    var eltspottedtext = document.createElement("div");
+                    eltspottedtext.innerHTML = keys[i];
+                    eltspottedtext.className = "elt-spotted-text";
+                    
+                    //console.log(elspotted);
+
+                    elspotted.appendChild(eltspottedtext);
+                    
+
                     var spottedmusician = new mapboxgl.Marker(elspotted)
                         .setLngLat(musdb[keys[i]]['latlng'])
                         .addTo(map);
+
+
 
                 } else {
                     // delete the firebase object
