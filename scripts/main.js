@@ -269,16 +269,24 @@ function getData() {
                  line3.innerHTML = musdb[keys[i]]['nameValue'];
                  var line1= document.createElement("p");
                  line1.innerHTML = "Playing Until "+musdb[keys[i]]['untilWhen'];
-                 var line2= document.createElement("a");
-                 line2.innerHTML = medialink;
-                 line2.href = medialink;
+                 
+                 if(medialink.length > 0){
+                     var line2= document.createElement("a");
+                     // line2.innerHTML = medialink;
+                     line2.innerHTML = "link here";
+                     line2.target = "_blank";
+
+                     line2.href = medialink;
+                 }
                  eltspottedtext.className = "elt-spotted-text";
                     
                 //console.log(elspotted);
                 eltspottedtext.appendChild(line3);
                 eltspottedtext.appendChild(line1);
-                eltspottedtext.appendChild(line2);
-
+                
+                if(medialink.length > 0){
+                    eltspottedtext.appendChild(line2);
+                }
                 elspotted.appendChild(eltspottedtext);
 
                 var spottedmusician = new mapboxgl.Marker(elspotted)
