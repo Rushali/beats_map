@@ -381,11 +381,11 @@ document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyA900B-mdQR0FNraYbG4z7KdhsTE-1LcXc",
-    authDomain: "newagent-89af2.firebaseapp.com",
-    databaseURL: "https://newagent-89af2.firebaseio.com",
-    projectId: "newagent-89af2",
-    storageBucket: "newagent-89af2.appspot.com",
-    messagingSenderId: "824108281115"
+    apiKey: "API_KEY",
+    authDomain: "AUTH_DOMAIN",
+    databaseURL: "DATABASE_URL",
+    projectId: "PROJECT_ID",
+    storageBucket: "STORAGE_BUCKET",
+    messagingSenderId: "SENDER_ID"
 };
 firebase.initializeApp(config);
